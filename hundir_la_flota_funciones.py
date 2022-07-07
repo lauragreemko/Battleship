@@ -5,33 +5,55 @@ import pygame
 from emoji import emojize
 import pandas as pd
 from time import sleep
+from hundir_la_flota_variables import *
 
-# FUNCIONES DE SONIDO
+
+# Sound functions
+
 def play_boat_sound():
+    '''
+    This function plays the sound for a boat shoot
+    '''
     pygame.mixer.Sound.play(pygame.mixer.Sound("boat_sound.wav"))
 
+
 def play_water_sound():
+    '''
+    This function plays the sound for a water shoot
+    '''
     pygame.mixer.Sound.play(pygame.mixer.Sound("water_sound.wav"))
     
+
 def play_octopus_sound():
+    '''
+    This functions plays the sound for an octopus shoot
+    '''
     pygame.mixer.Sound.play(pygame.mixer.Sound("octopus_sound.wav"))
 
 
-# FUNCION INICIAR TABLERO
+
+# Board elements functions
+
 def board_starter():
-    board = np.full((10,10), fill_value="\U000026AA")
+    '''
+    This function defines the initial empty board, filled with a white circle emoji
+    '''
+    board = np.full((10,10), fill_value=water_icon)
     return board
 
 
-# FUNCION COLOCAR PULPO
 def place_octopus(board):
+    '''
+    This function places the octopus in a random position on the board.
+    If in the chosen position there is a boat, it will choose another random one.
+    '''
     octopus_positioned = False
     while octopus_positioned == False:
-        column = random.randint(0, 9)
-        row = random.randint(0, 9)
-        octopus_position = (row, column)
-        if board[octopus_position] != "\U000026F5":
-            board[octopus_position] = "\U0001F419"
+        octopus_column = random.randint(0, 9)
+        octopus_row = random.randint(0, 9)
+        octopus_position = (octopus_row, octopus_column)
+        if board[octopus_position] != boat_icon:
+            board[octopus_position] = octopus_icon
             octopus_positioned = True
 
 
