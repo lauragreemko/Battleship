@@ -57,9 +57,9 @@ def place_octopus(board):
             octopus_positioned = True
 
 
-def choose_boat(available_boats):
+def choose_boat_manual(available_boats_list):
     '''
-    This functions allows the user to choose the boats to place manually, and it returns the chosen boats
+    This functions allows the user to choose the boats to place manually, and it returns the chosen boat
     It will show all the available boats with their indexes, and let the user enter the index of the boat to place.
     '''
     sleep(1)
@@ -76,33 +76,40 @@ def choose_boat(available_boats):
     while 0 > chosen_boat_index or chosen_boat_index > 10:
         chosen_boat_index = int(input("\nWrong number, enter a valid number: "))
 
-    chosen_boat = available_boats[chosen_boat_index]
-    available_boats.pop(chosen_boat_index)
+    # Here we define the chosen boat as the element of the previous list which corresponds
+    # to the index chosen by the user. Once define, we remove the chosen boat from the
+    # available boats list
+    chosen_boat_manual = available_boats_list[chosen_boat_index]
+    available_boats_list.pop(chosen_boat_index)
     sleep(1)
-    print("\nYou chose the boat:" , chosen_boat, "\n")
-    return chosen_boat
+    print("\nYou chose the boat:" , chosen_boat_manual, "\n")
+    return chosen_boat_manual
 
 
 
 # FUNCION ELEGIR BARCO RANDOM 
 
-def choose_random_boat(available_boats_random):
-    if len(available_boats_random) == 1:
-        chosen_boat = available_boats_random[0]
-        available_boats_random.pop(0)
+def choose_boat_random(available_boats_list):
+    '''
+    This function randomly chooses a boat from the list of available boats list, and it returns the chosen boat
+    It will show all the available boats with their indexes, and let the user enter the index of the boat to place.
+    '''
+    if len(available_boats_list) == 1:
+        chosen_boat = available_boats_list[0]
+        available_boats_list.pop(0)
         return chosen_boat
     else:
-        index = random.randint(0,(len(available_boats_random)-1))
-        chosen_boat = available_boats_random[index]
-        available_boats_random.pop(index)
+        index = random.randint(0,(len(available_boats_list)-1))
+        chosen_boat = available_boats_list[index]
+        available_boats_list.pop(index)
     return chosen_boat
     
 
 # FUNCION DEFINIR COORDENADAS BARCO INDIVIDUAL
 
-def define_boat_position(board,chosen_boat):
+def define_boat_position_manual(board,chosen_boat_manual):
 
-    chosen_boat = len(str(chosen_boat))
+    chosen_boat_manual = len(str(chosen_boat_manual))
     position_defined = False
 
     while position_defined == False:
@@ -145,21 +152,21 @@ def define_boat_position_random(board,chosen_boat):
 
 # FUNCION PEDIR DIRECCIÓN BARCO INDIVIDUAL AL USUARIO
 
-def choose_direction(board,chosen_boat):
+def choose_direction(board,chosen_boat_manual):
 
-    boat_position,column,row = define_boat_position(board,chosen_boat)
+    boat_position,column,row = define_boat_position_manual(board,chosen_boat_manual)
 
     column = int(column)
     row = int(row)
-    chosen_boat = len(str(chosen_boat))
+    chosen_boat_manual = len(str(chosen_boat_manual))
 
     sleep(1)
-    if (9 - column) < chosen_boat:
-        if (9 - row) < chosen_boat:
+    if (9 - column) < chosen_boat_manual:
+        if (9 - row) < chosen_boat_manual:
             print("Available positions: North or West \n")
             sleep(1)
             direction = input("Enter N for North or W for West: ")
-        elif (row) < chosen_boat: 
+        elif (row) < chosen_boat_manual: 
             print("Available positions: South or West \n")
             sleep(1)
             direction = input("Enter S for South or W for West: ")
@@ -167,12 +174,12 @@ def choose_direction(board,chosen_boat):
             print("Available positions: North, South or West \n")
             sleep(1)
             direction = input("Enter N for North, S for South or W for West: ")
-    elif (column) < chosen_boat:
-        if (row) < chosen_boat:
+    elif (column) < chosen_boat_manual:
+        if (row) < chosen_boat_manual:
             print("Available positions: South or East \n")
             sleep(1)
             direction = input("Enter S for South or E for East: ")
-        elif (9 - row) < chosen_boat:
+        elif (9 - row) < chosen_boat_manual:
             print("Available positions: North or West \n")
             sleep(1)
             direction = input("Enter N for North or W for West: ")
@@ -180,11 +187,11 @@ def choose_direction(board,chosen_boat):
             print("Available positions: North, South or East \n")
             sleep(1)
             direction = input("Enter N for North, S for South or E for East: ")
-    elif (9 - row) < chosen_boat: 
+    elif (9 - row) < chosen_boat_manual: 
         print("Available positions: North or West \n")
         sleep(1)
         direction = input("Enter N for North, E for East or W for West: ")
-    elif (row) < chosen_boat: 
+    elif (row) < chosen_boat_manual: 
             print("Available positions: South, East or West \n")
             sleep(1)
             direction = input("Enter S for South, E for East or W for West: ")
@@ -247,18 +254,18 @@ def choose_direction_random(board,chosen_boat):
 
 # FUNCION COLOCAR BARCO INDIVIDUAL
 
-def place_single_boat(board,chosen_boat,boat_position_list):
+def place_single_boat(board,chosen_boat_manual,boat_position_list):
 
-    direction, boat_position, column, row = choose_direction(board,chosen_boat)
+    direction, boat_position, column, row = choose_direction(board,chosen_boat_manual)
 
     boat_position = [(boat_position)]
     column = int(column)
     row = int(row)
-    chosen_boat = len(str(chosen_boat))
+    chosen_boat_manual = len(str(chosen_boat_manual))
     sleep(1)
     print("\nPlacing boat in direction" , direction, "and position" , boat_position, "\n")
 
-    while len(boat_position) < chosen_boat:
+    while len(boat_position) < chosen_boat_manual:
     
         if direction == "N":
             row = row - 1
@@ -327,8 +334,8 @@ def place_all_boats(board, available_boats,boat_position_list):
     manual_or_random = input("Enter M for manually or R for random: ")
     if manual_or_random == "M":
         while len(available_boats) > 0:
-            chosen_boat = choose_boat(available_boats)
-            place_single_boat(board, chosen_boat, boat_position_list)
+            chosen_boat_manual = choose_boat_manual(available_boats)
+            place_single_boat(board, chosen_boat_manual, boat_position_list)
     elif manual_or_random == "R":
         place_all_boats_random(board,available_boats, boat_position_list)
         print("\nPlacing your boats \n")
@@ -339,7 +346,7 @@ def place_all_boats(board, available_boats,boat_position_list):
 
 def place_all_boats_random(board, available_boats, boat_position_list):
     while len(available_boats) > 0:
-        chosen_boat = choose_random_boat(available_boats)
+        chosen_boat = choose_boat_random(available_boats)
         place_single_boat_random(board, chosen_boat, boat_position_list)
 
 
