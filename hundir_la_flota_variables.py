@@ -29,6 +29,10 @@ boat_position_list_machine = []
 
 total_boats = len(available_boats_list)
 
+position_boat_next_row = 0
+position_boat_next_column = 0
+
+
 
 rows = 10
 columns = 10
