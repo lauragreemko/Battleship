@@ -44,7 +44,6 @@ sleep(1)
 print("Placing machine boats  \n")
 sleep(1)
 place_all_boats_random(board_machine, available_boats_list_machine, boat_position_list_machine)
-print(board_machine)
 print("Machine boats have been placed  \n")
 sleep(1)
 

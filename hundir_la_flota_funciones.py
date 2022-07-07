@@ -107,53 +107,52 @@ def choose_boat_random(available_boats_list):
         available_boats_list.pop(index)
     return chosen_boat_random
     
-
-def define_starting_position_coordenates_manual(board,chosen_boat_manual):
+def define_boat_first_coordenate_manual(board,chosen_boat_manual):
     '''
     This function lets the user define the starting coordenates of the chosen boat
     '''
     # We convert the chosen boat variable into its size
     # We create a variable which set the position as not defined
     chosen_boat_manual = len(str(chosen_boat_manual))
-    starting_position_defined_manual = False
+    boat_first_coordenate_manual_defined = False
 
     # This loop will continue until the starting position will be defined
-    while starting_position_defined_manual == False:
+    while boat_first_coordenate_manual_defined == False:
         sleep(1)
         # We request the user to enter the starting position column number
-        starting_column_manual = int(input("Enter the number of the starting position column: "))
+        first_coordenate_column_manual = int(input("Enter the number of the starting position column: "))
 
         # This loop will start if the user enters a number below 0 or over 10 and will request a new number
-        while 0 > starting_column_manual or starting_column_manual > 10:
-            starting_column_manual = int(input("\nWrong number, enter a number from 0 to 9"))
+        while 0 > first_coordenate_column_manual or first_coordenate_column_manual > 10:
+            first_coordenate_column_manual = int(input("\nWrong number, enter a number from 0 to 9"))
 
         # We request the user to enter the starting position row number
-        starting_row_manual = int(input("\nEnter the number of the starting position row: "))
+        first_coordenate_row_manual = int(input("\nEnter the number of the starting position row: "))
 
         # This loop will start if the user enters a number below 0 or over 10 and will request a new number
-        while 0 > starting_row_manual or starting_row_manual > 10:
-            starting_row_manual = int(input("\nWrong number, enter a number from 0 to 9"))
+        while 0 > first_coordenate_row_manual or first_coordenate_row_manual > 10:
+            first_coordenate_row_manual = int(input("\nWrong number, enter a number from 0 to 9"))
 
         # We define the starting position coordenates as the entered row and column
-        boat_starting_position_manual = (starting_row_manual, starting_column_manual)
+        boat_first_coordenate_manual = (first_coordenate_row_manual, first_coordenate_column_manual)
         sleep(1)
-        print("\nThe starting position is:" , boat_starting_position_manual, "\n")
+        print("\nThe starting position is:" , boat_first_coordenate_manual, "\n")
 
         # This will checked if there is a boat in the starting position
         # If there is, the original loop will continue requesting new elements
         # If not, the boat will be placed
-        if board[boat_starting_position_manual] != boat_icon:
-            starting_position_defined_manual = True
+        if board[boat_first_coordenate_manual] != boat_icon:
+            boat_first_coordenate_manual_defined = True
         else:
             print("There is already a boat in this cell, please pick a different one \n")
 
-    return boat_starting_position_manual, starting_column_manual, starting_row_manual
+    return boat_first_coordenate_manual, first_coordenate_column_manual, first_coordenate_row_manual
 
 
-# FUNCION DEFINIR COORDENADAS BARCO INDIVIDUAL RANDOM
-
-def define_boat_position_random(board,chosen_boat_random):
-
+def define_starting_position_coordenates_random(board,chosen_boat_random):
+    '''
+    This functions defines randomly the starting position of the boat
+    '''
     chosen_boat_random = len(str(chosen_boat_random))
     position_defined = False
 
@@ -174,19 +173,19 @@ def define_boat_position_random(board,chosen_boat_random):
 
 def choose_direction(board,chosen_boat_manual):
 
-    boat_starting_position_manual, starting_column_manual, starting_row_manual = define_starting_position_coordenates_manual(board,chosen_boat_manual)
+    boat_first_coordenate_manual, first_coordenate_column_manual, first_coordenate_row_manual = define_boat_first_coordenate_manual(board,chosen_boat_manual)
 
-    starting_column_manual = int(starting_column_manual)
-    starting_row_manual = int(starting_row_manual)
+    first_coordenate_column_manual = int(first_coordenate_column_manual)
+    first_coordenate_row_manual = int(first_coordenate_row_manual)
     chosen_boat_manual = len(str(chosen_boat_manual))
 
     sleep(1)
-    if (9 - starting_column_manual) < chosen_boat_manual:
-        if (9 - starting_row_manual) < chosen_boat_manual:
+    if (9 - first_coordenate_column_manual) < chosen_boat_manual:
+        if (9 - first_coordenate_row_manual) < chosen_boat_manual:
             print("Available positions: North or West \n")
             sleep(1)
             direction = input("Enter N for North or W for West: ")
-        elif (starting_row_manual) < chosen_boat_manual: 
+        elif (first_coordenate_row_manual) < chosen_boat_manual: 
             print("Available positions: South or West \n")
             sleep(1)
             direction = input("Enter S for South or W for West: ")
@@ -194,12 +193,12 @@ def choose_direction(board,chosen_boat_manual):
             print("Available positions: North, South or West \n")
             sleep(1)
             direction = input("Enter N for North, S for South or W for West: ")
-    elif (starting_column_manual) < chosen_boat_manual:
-        if (starting_row_manual) < chosen_boat_manual:
+    elif (first_coordenate_column_manual) < chosen_boat_manual:
+        if (first_coordenate_row_manual) < chosen_boat_manual:
             print("Available positions: South or East \n")
             sleep(1)
             direction = input("Enter S for South or E for East: ")
-        elif (9 - starting_row_manual) < chosen_boat_manual:
+        elif (9 - first_coordenate_row_manual) < chosen_boat_manual:
             print("Available positions: North or West \n")
             sleep(1)
             direction = input("Enter N for North or W for West: ")
@@ -207,11 +206,11 @@ def choose_direction(board,chosen_boat_manual):
             print("Available positions: North, South or East \n")
             sleep(1)
             direction = input("Enter N for North, S for South or E for East: ")
-    elif (9 - starting_row_manual) < chosen_boat_manual: 
+    elif (9 - first_coordenate_row_manual) < chosen_boat_manual: 
         print("Available positions: North or West \n")
         sleep(1)
         direction = input("Enter N for North, E for East or W for West: ")
-    elif (starting_row_manual) < chosen_boat_manual: 
+    elif (first_coordenate_row_manual) < chosen_boat_manual: 
             print("Available positions: South, East or West \n")
             sleep(1)
             direction = input("Enter S for South, E for East or W for West: ")
@@ -221,14 +220,14 @@ def choose_direction(board,chosen_boat_manual):
         direction = input("Enter N for North, S for South, E for East or W for West: ")
         
 
-    return direction, boat_starting_position_manual, starting_column_manual, starting_row_manual
+    return direction, boat_first_coordenate_manual, first_coordenate_column_manual, first_coordenate_row_manual
 
 
 # FUNCIÓN DEFINIR DIRECCIÓN RANDOM
 
 def choose_direction_random(board,chosen_boat_random):
 
-    boat_position,column,row = define_boat_position_random(board,chosen_boat_random)
+    boat_position,column,row = define_starting_position_coordenates_random(board,chosen_boat_random)
 
     column = int(column)
     row = int(row)
@@ -276,30 +275,30 @@ def choose_direction_random(board,chosen_boat_random):
 
 def place_single_boat(board,chosen_boat_manual,boat_position_list):
 
-    direction, boat_starting_position_manual, starting_column_manual, starting_row_manual = choose_direction(board,chosen_boat_manual)
+    direction, boat_first_coordenate_manual, first_coordenate_column_manual, first_coordenate_row_manual = choose_direction(board,chosen_boat_manual)
 
-    boat_starting_position_manual = [(boat_starting_position_manual)]
-    starting_column_manual = int(starting_column_manual)
-    starting_row_manual = int(starting_row_manual)
+    boat_first_coordenate_manual = [(boat_first_coordenate_manual)]
+    first_coordenate_column_manual = int(first_coordenate_column_manual)
+    first_coordenate_row_manual = int(first_coordenate_row_manual)
     chosen_boat_manual = len(str(chosen_boat_manual))
 
     sleep(1)
-    print("\nPlacing boat in direction" , direction, "and position" , boat_starting_position_manual, "\n")
+    print("\nPlacing boat in direction" , direction, "and position" , boat_first_coordenate_manual, "\n")
 
-    while len(boat_starting_position_manual) < chosen_boat_manual:
+    while len(boat_first_coordenate_manual) < chosen_boat_manual:
     
         if direction == "N":
-            starting_row_manual = starting_row_manual - 1
+            first_coordenate_row_manual = first_coordenate_row_manual - 1
         elif direction == "S":
-            starting_row_manual = starting_row_manual + 1
+            first_coordenate_row_manual = first_coordenate_row_manual + 1
         elif direction == "E":
-            starting_column_manual = starting_column_manual + 1
+            first_coordenate_column_manual = first_coordenate_column_manual + 1
         elif direction == "W":
-            starting_column_manual = starting_column_manual - 1
+            first_coordenate_column_manual = first_coordenate_column_manual - 1
 
-        boat_starting_position_manual.append((starting_row_manual, starting_column_manual))
+        boat_first_coordenate_manual.append((first_coordenate_row_manual, first_coordenate_column_manual))
 
-    for elem in boat_starting_position_manual:
+    for elem in boat_first_coordenate_manual:
         board[elem] = "\U000026F5"
 
     sleep(1)
