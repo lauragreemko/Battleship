@@ -8,7 +8,7 @@ from time import sleep
 from hundir_la_flota_variables import *
 
 
-# Sound functions
+# SOUND FUNCTIONS
 
 def play_boat_sound():
     '''
@@ -32,11 +32,11 @@ def play_octopus_sound():
 
 
 
-# Board elements functions
+# BOARD ELEMENTS FUNCTIONS
 
 def board_starter():
     '''
-    This function defines the initial empty board, filled with a white circle emoji
+    This function defines the initial empty board, filled with a white circle emoji, and returns the board
     '''
     board = np.full((10,10), fill_value=water_icon)
     return board
@@ -44,8 +44,8 @@ def board_starter():
 
 def place_octopus(board):
     '''
-    This function places the octopus in a random position on the board.
-    If in the chosen position there is a boat, it will choose another random one.
+    This function places the octopus in a random position on the board
+    If in the chosen position there is a boat, it will choose another random one
     '''
     octopus_positioned = False
     while octopus_positioned == False:
@@ -57,18 +57,27 @@ def place_octopus(board):
             octopus_positioned = True
 
 
-# FUNCION ELEGIR QUE BARCO QUIERES COLOCAR
-
 def choose_boat(available_boats):
+    '''
+    This functions allows the user to choose the boats to place manually, and it returns the chosen boats
+    It will show all the available boats with their indexes, and let the user enter the index of the boat to place.
+    '''
     sleep(1)
-    for index, boat in enumerate(available_boats):
-        print(index, boat)
+
+    # This loop prints every available boat with its index
+    for boat_index, available_boat in enumerate(available_boats_list):
+        print(boat_index, available_boat)
+
     sleep(1)
-    index = int(input("\nEnter the number of the boat you want to place: "))
-    while 0 > index or index > 10:
-        index = int(input("\nWrong number, enter a valid number: "))
-    chosen_boat = available_boats[index]
-    available_boats.pop(index)
+
+    # This loop requests and index to the user, from 0 to 9
+    # If the entered number is smaller than 0 or bigger than 10 it will request a new number
+    chosen_boat_index = int(input("\nEnter the number of the boat you want to place: "))
+    while 0 > chosen_boat_index or chosen_boat_index > 10:
+        chosen_boat_index = int(input("\nWrong number, enter a valid number: "))
+
+    chosen_boat = available_boats[chosen_boat_index]
+    available_boats.pop(chosen_boat_index)
     sleep(1)
     print("\nYou chose the boat:" , chosen_boat, "\n")
     return chosen_boat
